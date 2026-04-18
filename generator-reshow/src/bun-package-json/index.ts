@@ -1,9 +1,8 @@
 import { YoGenerator, YoHelper } from "yo-reshow";
 
-
 const defaultPackageJSON = {
   devDependencies: {
-    "typescript": "*",
+    typescript: "*",
   },
   scripts: {},
   files: ["dist", "package.json", "README.md"],
@@ -13,41 +12,33 @@ const defaultPackageJSON = {
  * package-json Generator
  */
 export default class extends YoGenerator {
-  _payload: any;
+  default() {
+    const { getDotYo, composeWithBefore } = YoHelper(this);
 
-  writing() {
-    const { getDotYo } = YoHelper(this);
-    this._payload = {
+    this.payload = {
       mainName: "",
       description: "",
-      babelRootMode: "",
       authorName: "",
       authorEmail: "",
       ...this.payload,
       ...this.options,
       ...getDotYo(this.options),
     };
-
-    this.composeWith(require.resolve("../package-json"), this._payload);
+    composeWithBefore(require.resolve("../package-json"), this.payload);
   }
 
-  conflicts() {
+  writing() {
     const { handleKeywords, updateDestJSON } = YoHelper(this);
-    const payload = this._payload;
+    const payload = this.payload;
 
     updateDestJSON(
       "package.json",
       payload,
-      (
-        data: any,
-        {
-          keyword,
-          repository,
-          repositoryHomepage,
-        }: any
-      ) => {
+      (data: any = {}, { keyword, repository, repositoryHomepage }: any) => {
         handleKeywords(keyword, (arr: any) => (data.keywords = arr));
-        Object.assign(data, defaultPackageJSON);
+        const { scripts: defaultScripts, ...restDefaults } = defaultPackageJSON;
+        Object.assign(data, restDefaults);
+        data.scripts = { ...defaultScripts, ...data.scripts };
         data.repository = repository;
         data.homepage = repositoryHomepage;
         return data;

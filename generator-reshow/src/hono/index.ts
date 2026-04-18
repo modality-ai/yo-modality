@@ -1,4 +1,4 @@
-import { YoGenerator, YoHelper, commonPrompt } from "yo-reshow";
+import { YoGenerator, YoHelper } from "yo-reshow";
 
 /**
  * Hono Generator
@@ -7,9 +7,6 @@ import { YoGenerator, YoHelper, commonPrompt } from "yo-reshow";
 const defaultPackageJSON = {
   dependencies: {
     hono: "*",
-  },
-  devDependencies: {
-    typescript: "*",
   },
   scripts: {
     start: "bun run src/index.ts",
@@ -25,27 +22,7 @@ export default class extends YoGenerator {
    */
 
   async prompting() {
-    const {
-      handleAnswers,
-      mergePromptOrOption,
-      promptChainLocator,
-      promptChain,
-    } = YoHelper(this);
-
-    const prompts = [
-      ...commonPrompt.mainName(this),
-      ...commonPrompt.babel(this),
-      ...commonPrompt.desc(this),
-      ...commonPrompt.author(this),
-      ...commonPrompt.repository(this),
-    ];
-
-    const answers = await mergePromptOrOption(prompts, (nextPrompts: any) =>
-      promptChain(promptChainLocator(nextPrompts))
-    );
-    handleAnswers(answers, (payload: any) => {
-      this.composeWith(require.resolve("../bun"), payload);
-    });
+    this.composeWith(require.resolve("../bun"), {});
   }
 
   writing() {
@@ -62,10 +39,7 @@ export default class extends YoGenerator {
     updateDestJSON(
       "package.json",
       payload,
-      (
-        data: any,
-        { keyword, repository, repositoryHomepage }: any
-      ) => {
+      (data: any, { keyword, repository, repositoryHomepage }: any) => {
         handleKeywords(keyword, (arr: any) => (data.keywords = arr));
         Object.assign(data, defaultPackageJSON);
         data.repository = repository;

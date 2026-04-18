@@ -41,11 +41,10 @@ const defaultPackageJSON = {
  * package-json Generator
  */
 export default class extends YoGenerator {
-  _payload: any;
 
-  writing() {
-    const { getDotYo } = YoHelper(this);
-    this._payload = {
+  default() {
+    const { getDotYo, composeWithBefore } = YoHelper(this);
+    this.payload = {
       mainName: "",
       description: "",
       babelRootMode: "",
@@ -55,19 +54,18 @@ export default class extends YoGenerator {
       ...this.options,
       ...getDotYo(this.options),
     };
-
-    this.composeWith(require.resolve("../package-json"), this._payload);
+    composeWithBefore(require.resolve("../package-json"), this.payload);
   }
 
-  conflicts() {
+  writing() {
     const { cp, handleKeywords, updateDestJSON } = YoHelper(this);
-    const payload = this._payload;
+    const payload = this.payload;
 
     updateDestJSON(
       "package.json",
       payload,
       (
-        data: any,
+        data: any = {},
         {
           isApp,
           isUseWebpack,
@@ -81,7 +79,9 @@ export default class extends YoGenerator {
         }: any
       ) => {
         handleKeywords(keyword, (arr: any) => (data.keywords = arr));
-        Object.assign(data, defaultPackageJSON);
+        const { scripts: defaultScripts, ...restDefaults } = defaultPackageJSON;
+        Object.assign(data, restDefaults);
+        data.scripts = { ...defaultScripts, ...data.scripts };
         data.repository = repository;
         data.homepage = repositoryHomepage;
         if (isApp) {
@@ -113,7 +113,7 @@ export default class extends YoGenerator {
           delete data.module;
           delete data.scripts["build:cjs"];
           data.main = "./src/index.js";
-          data.bin[mainName] = "./src/index.js";
+          data.bin = { ...(data.bin || {}), [mainName]: "./src/index.js" };
           data.files = data.files.filter((f: string) => f !== "build");
           data.files.push("src");
         } else {

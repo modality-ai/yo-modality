@@ -5,7 +5,7 @@
     "": {
       "name": "generator-reshow",
       "dependencies": {
-        "yo-reshow": "^0.19.11",
+        "yo-reshow": "^0.19.12",
       },
       "devDependencies": {
         "@types/bun": "^1.3.12",
@@ -1223,7 +1223,7 @@
 
     "yeoman-test": ["yeoman-test@6.3.0", "", { "dependencies": { "inquirer": "^8.0.0", "lodash": "^4.17.21", "mem-fs-editor": "^9.0.0", "sinon": "^10.0.0", "temp-dir": "^2.0.0" }, "peerDependencies": { "mem-fs": "^2.1.0", "yeoman-environment": "^3.3.0", "yeoman-generator": "*" } }, "sha512-FpaLV5AiVFlYe4pizAB/QLWc+5BSyttk/TcFQfi/r8g/rz290uqEkV4waN3rHEvP/DCmoMNSJykKTZNWL2y07g=="],
 
-    "yo-reshow": ["yo-reshow@0.19.12", "", { "dependencies": { "call-func": "^0.5.3", "mem-fs": "^4.1.4", "mkdirp": "3.0.1", "object-nested": "^0.2.0", "parse-ini-string": "^0.2.0", "reshow-constant": "^0.18.0", "yeoman-generator": "^5.10.0", "yosay": "^3.0.0" } }, "sha512-wLOuXhlbKcazAMXuuRQrapRDTF81mLk4ih2TiD9ECf2zNvApnBmeaov6LR+YgLpK7mGLsg3E/tCDFGEuooRxsw=="],
+    "yo-reshow": ["yo-reshow@0.19.13", "", { "dependencies": { "call-func": "^0.5.3", "mem-fs": "^4.1.4", "mkdirp": "3.0.1", "object-nested": "^0.2.0", "parse-ini-string": "^0.2.0", "reshow-constant": "^0.18.0", "yeoman-generator": "^5.10.0", "yosay": "^3.0.0" } }, "sha512-pgeSfpyf1YlGFTJJzLh/QGcQonoF5Ee29Tq87kFQeMlZ1mUAoIn9KdUw35HZazeTeYMkSj7SNfc4rUU05FgBVw=="],
 
     "yo-unit": ["yo-unit@0.19.3", "", { "dependencies": { "mem-fs": "^4.1.3", "reshow-constant": "^0.18.0", "reshow-unit-dom": "^0.7.5", "yeoman-assert": "^3.1.1", "yeoman-environment": "^3.x", "yeoman-test": "^6.x" } }, "sha512-UMzS9L5Snz8wOiK6K32KbOFIjKNK9QAiE9yBgCQq9R0EnA39tT2ra/pJIec0+QOYMFin6DMpLrw/vP2PzC9xUg=="],
 

@@ -9,12 +9,12 @@
 import { describe, it, beforeAll, afterAll } from "bun:test";
 import { YoTest, assert } from "yo-unit";
 
-describe("!! package-json !!", () => {
+describe("!! bun-package-json !!", () => {
   let runResult: any;
 
   beforeAll(async () => {
     runResult = await YoTest({
-      source: import.meta.dirname + "/../../../generators/babel-package-json",
+      source: import.meta.dirname + "/../../../generators/bun-package-json",
       options: {
         isReady: true,
         description: "foo-desc",
@@ -41,7 +41,7 @@ describe("!! package-json !!", () => {
 
   it("should have content", () => {
     assert.fileContent("package.json", "foo-desc");
-    assert.noFileContent("package.json", '"private"');
-    assert.fileContent("package.json", '"main": "./src/index.js"');
+    assert.fileContent("package.json", '"main": "./build/cjs/src/index.js"');
+    assert.fileContent("package.json", '"typescript"');
   });
 });

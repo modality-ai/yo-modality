@@ -35,7 +35,6 @@ export default class extends YoGenerator {
 
     const prompts = [
       ...commonPrompt.mainName(this),
-      ...commonPrompt.babel(this),
       ...commonPrompt.desc(this),
       ...commonPrompt.author(this),
       ...commonPrompt.repository(this),
