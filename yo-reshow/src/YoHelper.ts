@@ -4,6 +4,7 @@ import { STRING, FUNCTION, OBJ_SIZE } from "reshow-constant";
 import getDestFolderName from "./getDestFolderName";
 import isFile from "./isFile";
 import isDir from "./isDir";
+import { isNpx } from "./isNpx";
 import unlink from "./unlink";
 
 // for app
@@ -191,6 +192,14 @@ const YoHelper = (oGen: any): YoHelperType => {
         prompts,
         options,
       );
+      if (isNpx()) {
+        nextPrompts.forEach((p: any) => {
+          if (p.name && p.default !== undefined) {
+            nextAnswer[p.name] = typeof p.default === "function" ? p.default() : p.default;
+          }
+        });
+        return Promise.resolve(nextAnswer);
+      }
       return cb(nextPrompts, nextAnswer).then((props: any) => ({
         ...props,
         ...nextAnswer,

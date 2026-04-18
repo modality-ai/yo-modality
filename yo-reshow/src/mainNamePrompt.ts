@@ -1,5 +1,6 @@
 import callfunc from "call-func";
 import YoHelper from "./YoHelper";
+import { isNpx } from "./isNpx";
 
 const defaultI18n = {
   tip: ({ namespace }: { namespace: string }) =>
@@ -11,8 +12,6 @@ const defaultI18n = {
 };
 
 type I18n = Partial<typeof defaultI18n>;
-
-const isNpx = () => process.env.npm_command === "exec";
 
 const mainNamePrompt = (oGen: any, i18n?: I18n): any[] => {
   const { say, getDestFolderName, getAllAns, exit } = YoHelper(oGen);
@@ -41,7 +40,7 @@ const mainNamePrompt = (oGen: any, i18n?: I18n): any[] => {
             exit(() => say(callfunc(mergedI18n.notReady)));
           }
         },
-      },
+      }
     );
   }
   prompts.push({
