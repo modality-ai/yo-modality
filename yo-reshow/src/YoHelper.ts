@@ -137,6 +137,7 @@ export type YoHelperType = {
     cb?: (payload: import("./handleAnswers").Payload) => void,
   ) => void;
   handleKeywords: typeof handleKeywords;
+  composeWithBefore: (generatorPath: string, options?: any) => void;
 };
 
 const YoHelper = (oGen: any): YoHelperType => {
@@ -304,6 +305,31 @@ const YoHelper = (oGen: any): YoHelperType => {
     },
     handleAnswers: handleAnswers(oGen),
     handleKeywords,
+    composeWithBefore: (generatorPath: string, options?: any) => {
+      const ALL_PHASES = [
+        "initializing", "prompting", "configuring", "default",
+        "writing", "conflicts", "install", "end",
+      ];
+      const resolvedPath = require.resolve(generatorPath);
+      const GenClass = require(resolvedPath);
+      const ChildClass = GenClass.default || GenClass;
+      const child = new ChildClass([], {
+        ...oGen.options,
+        ...options,
+        env: oGen.env,
+        resolved: resolvedPath,
+      });
+      const runLoop = (oGen.env as any).runLoop;
+      ALL_PHASES.forEach((phase) => {
+        const childFn = (child as any)[phase];
+        if (typeof childFn !== "function") return;
+        const subQueue = `before:${phase}`;
+        runLoop.addSubQueue(subQueue, phase);
+        runLoop.add(subQueue, (done: () => void) => {
+          Promise.resolve(childFn.call(child)).then(done);
+        });
+      });
+    },
   };
 };
 
