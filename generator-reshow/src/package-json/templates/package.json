@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "version": "0.0.0",
+  "name": "<%= mainName %>",
+  "repository": {},
+  "homepage": "",
+  "description": "<%= description %>",
+  "keywords": [],
+  "author": "<%= authorName %> <<%= authorEmail %>>",
+  "license": "ISC",
+  "dependencies": { },
+  "devDependencies": { },
+  "exports": {
+    "types": "./types/index.d.ts",
+    "require": "./build/cjs/src/index.js",
+    "import": "./build/es/src/index.mjs"
+  },
+  "types": "./types/index.d.ts",
+  "main": "./build/cjs/src/index.js",
+  "module": "./build/es/src/index.mjs",
+  "bin": {
+    "<%= mainName %>": "./build/cjs/src/index.js"
+  }
+}

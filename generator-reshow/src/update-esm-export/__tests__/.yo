@@ -1,0 +1,3 @@
+exports_pkgjson=package.json
+exports_moreKeyArr[]=.
+exports_moreValArr[]=./dist/index.js
