@@ -1,6 +1,6 @@
 import callfunc from "call-func";
 import YoHelper from "./YoHelper";
-import { isNpx } from "./isNpx";
+import { isNodePkgExecute } from "./isNpx";
 
 const defaultI18n = {
   tip: ({ namespace }: { namespace: string }) =>
@@ -31,7 +31,7 @@ const mainNamePrompt = (oGen: any, i18n?: I18n): any[] => {
         message: callfunc(mergedI18n.isReady, [
           { destFolderName: getDestFolderName() },
         ]),
-        default: isNpx(),
+        default: isNodePkgExecute(),
       },
       {
         when: (response: any) => {

@@ -1,9 +1,20 @@
 import PATH from "path";
 import FS from "fs";
-import { execSync } from "child_process";
+import { execSync, spawnSync } from "child_process";
 import { createRequire } from "module";
 
+const yopkg = "yo@6.0.0";
+
 const _require = createRequire(import.meta.url);
+
+const findBunx = (): string | null => {
+  try {
+    const bunx = execSync("which bunx", { encoding: "utf8" }).trim();
+    return bunx && FS.existsSync(bunx) ? bunx : null;
+  } catch {
+    return null;
+  }
+};
 
 const npxPath = () => {
   const path = "node_modules/npm/node_modules/libnpx/";
@@ -73,7 +84,7 @@ const getNpxCmd = (argv: string[]) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let cmd: any = [
     "--package",
-    "yo",
+    yopkg,
     "--package",
     getPkgName(generatorPkg),
     "--call",
@@ -86,8 +97,38 @@ const getNpxCmd = (argv: string[]) => {
   return cmd;
 };
 
+const bunx = (generatorName: string, otherArgv: string[]): boolean => {
+  const bunx = findBunx();
+  if (!bunx) return false;
+  const [generatorPkg] = (generatorName || "").split(":");
+  if (!generatorPkg) return false;
+  const result = spawnSync(
+    bunx,
+    [
+      "--bun",
+      "--package",
+      yopkg,
+      "--package",
+      getPkgName(generatorPkg),
+      "yo",
+      generatorName,
+      ...otherArgv,
+    ],
+    { stdio: "inherit" }
+  );
+  process.exit(result.status ?? 1);
+};
+
 const init = async () => {
   const argv = process.argv;
+  const generatorName = argv[2];
+  const otherArgv = argv.slice(3);
+
+  // Try bunx first, fall back to npx
+  if (generatorName) {
+    bunx(generatorName, otherArgv);
+  }
+
   const cmdOptions = getNpxCmd(argv);
   if (cmdOptions) {
     await npx(cmdOptions);

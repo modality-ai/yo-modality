@@ -1,1 +1,1 @@
-export const isNpx = () => process.env.npm_command === "exec";
+export const isNodePkgExecute = () => process.env.npm_command === "exec";
