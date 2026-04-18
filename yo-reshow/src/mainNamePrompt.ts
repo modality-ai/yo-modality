@@ -12,6 +12,8 @@ const defaultI18n = {
 
 type I18n = Partial<typeof defaultI18n>;
 
+const isNpx = () => process.env.npm_command === "exec";
+
 const mainNamePrompt = (oGen: any, i18n?: I18n): any[] => {
   const { say, getDestFolderName, getAllAns, exit } = YoHelper(oGen);
   const mergedI18n = { ...defaultI18n, ...i18n };
@@ -30,7 +32,7 @@ const mainNamePrompt = (oGen: any, i18n?: I18n): any[] => {
         message: callfunc(mergedI18n.isReady, [
           { destFolderName: getDestFolderName() },
         ]),
-        default: false,
+        default: isNpx(),
       },
       {
         when: (response: any) => {
