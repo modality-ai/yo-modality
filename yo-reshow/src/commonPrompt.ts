@@ -3,7 +3,7 @@ import YoHelper from "./YoHelper";
 
 const commonPrompt = {
   mainName,
-  desc: (oGen: any, { keyword = true }: { keyword?: boolean } = {}) => {
+  desc: (_oGen: any, { keyword = true }: { keyword?: boolean } = {}) => {
     const nextPrompts: any[] = [
       {
         type: "input",
@@ -22,7 +22,7 @@ const commonPrompt = {
     }
     return nextPrompts;
   },
-  author: (oGen: any) => [
+  author: (_oGen: any) => [
     {
       type: "input",
       name: "authorName",
@@ -37,7 +37,7 @@ const commonPrompt = {
     },
   ],
   repository: (
-    oGen: any,
+    _oGen: any,
     { defaultRepositoryName, defaultRepositoryOrgName }: { defaultRepositoryName?: string; defaultRepositoryOrgName?: string } = {},
   ) => [
     {

@@ -26,12 +26,8 @@ export default class extends YoGenerator {
    * https://github.com/SBoudrias/Inquirer.js
    */
   async prompting() {
-    const {
-      handleAnswers,
-      mergePromptOrOption,
-      promptChainLocator,
-      promptChain,
-    } = YoHelper(this);
+    const { handleAnswers, mergePromptOrOption, composeWithBefore } =
+      YoHelper(this);
 
     const prompts = [
       ...commonPrompt.mainName(this),
@@ -40,21 +36,14 @@ export default class extends YoGenerator {
       ...commonPrompt.repository(this),
     ];
 
-    const answers = await mergePromptOrOption(prompts, (nextPrompts: any) =>
-      promptChain(promptChainLocator(nextPrompts))
-    );
-    handleAnswers(answers, (payload: any) => {
-      if (payload.isUseBabel) {
-        this.composeWith(require.resolve("../compile-sh"), payload);
-      }
-      this.composeWith(require.resolve("../bun-package-json"), payload);
+    handleAnswers(await mergePromptOrOption(prompts), (payload: any) => {
+      composeWithBefore(require.resolve("../bun-package-json"), payload);
     });
   }
 
   writing() {
     this.env.options.nodePackageManager = "bun";
     const { cp, chMainName } = YoHelper(this);
-    const { } = this.payload || {};
 
     // handle change to new folder
     chMainName(this.mainName);

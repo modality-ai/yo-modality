@@ -14,7 +14,7 @@
   "author": "Hill <hill@kimo.com>",
   "license": "ISC",
   "dependencies": {
-    "yo-reshow": "^0.19.16"
+    "yo-reshow": "^0.19.17"
   },
   "devDependencies": {
     "@types/bun": "^1.3.12",

@@ -1,4 +1,4 @@
-import { YoGenerator, YoHelper } from "yo-reshow";
+import { YoGenerator, YoHelper, commonPrompt } from "yo-reshow";
 
 /**
  * Hono Generator
@@ -22,12 +22,31 @@ export default class extends YoGenerator {
    */
 
   async prompting() {
-    this.composeWith(require.resolve("../bun"), {});
+    const {
+      handleAnswers,
+      mergePromptOrOption,
+      composeWithBefore
+    } = YoHelper(this);
+
+    const prompts = [
+      ...commonPrompt.mainName(this),
+      ...commonPrompt.desc(this),
+      ...commonPrompt.author(this),
+      ...commonPrompt.repository(this),
+    ];
+
+    const answers = await mergePromptOrOption(prompts);
+    handleAnswers(answers, (payload: any) => {
+      composeWithBefore(require.resolve("../bun"), payload);
+    });
   }
 
   writing() {
     this.env.options.nodePackageManager = "bun";
-    const { cp } = YoHelper(this);
+    const { cp, chMainName } = YoHelper(this);
+
+    // handle change to new folder
+    chMainName(this.mainName);
 
     cp("src/index.ts", null, this.payload);
   }
@@ -39,7 +58,7 @@ export default class extends YoGenerator {
     updateDestJSON(
       "package.json",
       payload,
-      (data: any, { keyword, repository, repositoryHomepage }: any) => {
+      (data: any = {}, { keyword, repository, repositoryHomepage }: any) => {
         handleKeywords(keyword, (arr: any) => (data.keywords = arr));
         Object.assign(data, defaultPackageJSON);
         data.repository = repository;
