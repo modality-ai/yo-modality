@@ -51,6 +51,7 @@ export default class extends YoGenerator {
     chMainName(this.mainName);
 
     cp("src/index.ts", null, this.payload);
+    cp("src/cli.ts", null, this.payload);
   }
 
   conflicts() {
