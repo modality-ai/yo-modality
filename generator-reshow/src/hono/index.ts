@@ -8,6 +8,9 @@ const defaultPackageJSON = {
   dependencies: {
     hono: "*",
   },
+  devDependencies: {
+    "modality-bun-kit": "*",
+  },
   scripts: {
     test: "npm run build && bun test",
     build: "bun run src/build.ts",
@@ -62,6 +65,7 @@ export default class extends YoGenerator {
         Object.assign(data, defaultPackageJSON);
         data.repository = repository;
         data.homepage = repositoryHomepage;
+        data.bin = { [this.mainName]: "src/cli.ts" };
         return data;
       }
     );

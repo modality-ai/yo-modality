@@ -19,9 +19,7 @@
   "types": "./types/index.d.ts",
   "main": "./build/cjs/src/index.js",
   "module": "./build/es/src/index.mjs",
-  "bin": {
-    "<%= mainName %>": "./build/cjs/src/index.js"
-  },
+  "bin": {},
   "scripts": {},
   "files": {}
 }
