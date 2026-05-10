@@ -9,6 +9,8 @@ const defaultPackageJSON = {
     hono: "*",
   },
   scripts: {
+    test: "npm run build && bun test",
+    build: "bun run src/build.ts",
     start: "bun run src/index.ts",
     dev: "bun --hot src/index.ts",
   },
@@ -22,11 +24,8 @@ export default class extends YoGenerator {
    */
 
   async prompting() {
-    const {
-      handleAnswers,
-      mergePromptOrOption,
-      composeWithBefore
-    } = YoHelper(this);
+    const { handleAnswers, mergePromptOrOption, composeWithBefore } =
+      YoHelper(this);
 
     const prompts = [
       ...commonPrompt.mainName(this),
