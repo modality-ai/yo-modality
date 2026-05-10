@@ -1,3 +1,4 @@
+import { dirname } from "path";
 import { YoGenerator, YoHelper, commonPrompt, promptSubGenerator } from "yo-reshow";
 
 /**
@@ -31,7 +32,11 @@ export default class extends YoGenerator {
    * https://github.com/SBoudrias/Inquirer.js
    */
   async prompting() {
-    const selected = await promptSubGenerator(this, { currentDir: __dirname });
+    // Use yeoman's runtime `this.resolved` (path of the loaded generator file)
+    // instead of `__dirname`, which `bun build` inlines at build time as the
+    // source path (`src/app`), causing module resolution to fail at runtime.
+    const currentDir = dirname((this as unknown as { resolved: string }).resolved);
+    const selected = await promptSubGenerator(this, { currentDir });
 
     this.selectedGenerator = selected ?? "app";
 
@@ -61,7 +66,7 @@ export default class extends YoGenerator {
     if (this.selectedGenerator !== "app") {
       return;
     }
-    this.env.options.nodePackageManager = "yarn";
+    this.env.options.nodePackageManager = "bun";
     const { cp, chMainName, mkdir } = YoHelper(this);
 
     // handle change to new folder

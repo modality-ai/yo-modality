@@ -49,7 +49,7 @@ export default class extends YoGenerator {
   }
 
   writing() {
-    this.env.options.nodePackageManager = "yarn";
+    this.env.options.nodePackageManager = "bun";
     const { cp, chMainName } = YoHelper(this);
     const { isUseBabel, isUseBabelUI, babelRootMode } = this.payload || {};
 

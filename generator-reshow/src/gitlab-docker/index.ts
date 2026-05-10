@@ -51,7 +51,7 @@ export default class extends YoGenerator {
   }
 
   writing() {
-    this.env.options.nodePackageManager = "yarn";
+    this.env.options.nodePackageManager = "bun";
     this.options.skipInstall = true;
     const { cp, chMainName } = YoHelper(this);
 

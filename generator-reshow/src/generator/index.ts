@@ -26,7 +26,7 @@ export default class extends YoGenerator {
    * https://github.com/SBoudrias/Inquirer.js
    */
   async prompting() {
-    this.env.options.nodePackageManager = "yarn";
+    this.env.options.nodePackageManager = "bun";
 
     const {
       handleAnswers,
