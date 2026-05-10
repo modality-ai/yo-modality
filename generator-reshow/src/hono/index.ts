@@ -12,8 +12,9 @@ const defaultPackageJSON = {
     "modality-bun-kit": "*",
   },
   scripts: {
+    "build:types": "bun tsc -p ./",
+    build: "bun build:types",
     test: "npm run build && bun test",
-    build: "bun run src/build.ts",
     start: "bun run src/index.ts",
     dev: "bun --hot src/index.ts",
   },
