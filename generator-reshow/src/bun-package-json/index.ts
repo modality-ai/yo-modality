@@ -2,7 +2,7 @@ import { YoGenerator, YoHelper } from "yo-reshow";
 
 const defaultPackageJSON = {
   devDependencies: {
-    typescript: "*",
+    "modality-bun-kit": "*",
   },
   scripts: {
     "build:types": "bun tsc -p ./",

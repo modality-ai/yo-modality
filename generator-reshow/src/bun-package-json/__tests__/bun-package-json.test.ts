@@ -42,6 +42,6 @@ describe("!! bun-package-json !!", () => {
   it("should have content", () => {
     assert.fileContent("package.json", "foo-desc");
     assert.fileContent("package.json", '"main": "./build/cjs/src/index.js"');
-    assert.fileContent("package.json", '"typescript"');
+    assert.fileContent("package.json", '"modality-bun-kit"');
   });
 });
