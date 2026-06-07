@@ -4,7 +4,11 @@ const defaultPackageJSON = {
   devDependencies: {
     typescript: "*",
   },
-  scripts: {},
+  scripts: {
+    "build:types": "bun tsc -p ./",
+    build: "bun build:types",
+    test: "npm run build && bun test",
+  },
   files: ["dist", "package.json", "README.md"],
 };
 
@@ -27,9 +31,9 @@ export default class extends YoGenerator {
     composeWithBefore(require.resolve("../package-json"), this.payload);
   }
 
-  writing() {
+  conflicts() {
     const { handleKeywords, updateDestJSON } = YoHelper(this);
-    const payload = this.payload;
+    const payload = this.payload || {};
 
     updateDestJSON(
       "package.json",
@@ -41,6 +45,7 @@ export default class extends YoGenerator {
         data.scripts = { ...defaultScripts, ...data.scripts };
         data.repository = repository;
         data.homepage = repositoryHomepage;
+        data.bin = { [this.mainName]: "src/cli.ts" };
         return data;
       }
     );

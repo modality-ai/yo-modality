@@ -37,6 +37,7 @@ export default class extends YoGenerator {
     ];
 
     handleAnswers(await mergePromptOrOption(prompts), (payload: any) => {
+      console.log({payload});
       composeWithBefore(require.resolve("../bun-package-json"), payload);
     });
   }
@@ -49,6 +50,7 @@ export default class extends YoGenerator {
     chMainName(this.mainName);
 
     // handle copy file
+    cp("src", null, this.payload);
     cp("README.md", null, this.payload);
     cp("tsconfig.json", null, this.payload);
     cp("_gitignore", ".gitignore", this.payload);

@@ -328,6 +328,7 @@ const YoHelper = (oGen: any): YoHelperType => {
         env: oGen.env,
         resolved: resolvedPath,
       });
+      child.mainName = oGen.mainName;
       const runLoop = (oGen.env as any).runLoop;
       ALL_PHASES.forEach((phase) => {
         const childFn = (child as any)[phase];
