@@ -4,6 +4,14 @@ const defaultPackageJSON = {
   devDependencies: {
     "modality-bun-kit": "*",
   },
+  "exports": {
+    "types": "./types/index.d.ts",
+    "require": "./dist/index.js",
+    "import": "./dist/index.js"
+  },
+  "types": "./types/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   scripts: {
     "build:types": "bun tsc -p ./",
     build: "bun build:types",
