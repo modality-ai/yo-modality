@@ -1,8 +1,8 @@
 import type { AITool } from "modality-mcp-kit";
 
-import { createFlatCommandSchema } from "modality-cli-kit";
+import { createFlatCommandSchema, getHelp } from "modality-cli-kit";
 import { z } from "zod";
-import { registry } from "./commands-index";
+import { registry, CLI_NAME, TAGLINE } from "./commands-index";
 
 /**
  * SkillSchema addresses the whole command bundle: a `command` field selecting
@@ -25,7 +25,16 @@ export const aiTool: AITool = {
     // (the schema is built dynamically, so key types are erased) but is always
     // a string value at runtime — validated by SkillSchema's `command` enum.
     const { command, ...args } = props;
-    if (!command) return; // no command selected (e.g. empty invocation) → no-op
+
+    if (!command) {
+      // No command selected (e.g. empty invocation) → return help text.
+      return getHelp({
+        cliName: CLI_NAME,
+        tagline: TAGLINE,
+        commands: registry.all,
+      });
+    }
+
     return registry.execute(String(command), args);
   },
 };
