@@ -21,7 +21,7 @@ const defaultPackageJSON = {
     clean: "find ./dist -name '*.*' | xargs rm -rf",
     "build:types": "bun tsc -p ./",
     "build:cli":
-      "bun build ./src/runner/cli.ts ./src/index.ts --target=bun --outdir=./dist --root=./src",
+      "bun build ./src/runner/cli.ts ./src/index.ts ./src/scripts/commands/*.ts --target=bun --outdir=./dist --root=./src",
     build:
       "bun run clean && bun run build:types && bun run build:cli && chmod +x ./dist/runner/cli.js",
     test: "npm run build && bun test",

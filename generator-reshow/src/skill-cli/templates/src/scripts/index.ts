@@ -2,7 +2,7 @@ import type { AITool } from "modality-mcp-kit";
 
 import { createFlatCommandSchema, getHelp } from "modality-cli-kit";
 import { z } from "zod";
-import { registry, CLI_NAME, TAGLINE } from "./commands-index";
+import { registry, CLI_NAME, TAGLINE } from "./registry";
 
 /**
  * SkillSchema addresses the whole command bundle: a `command` field selecting

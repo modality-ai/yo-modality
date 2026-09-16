@@ -5,10 +5,10 @@
     "": {
       "name": "generator-reshow",
       "dependencies": {
-        "yo-reshow": "^0.19.17",
+        "yo-reshow": "^0.19.19",
       },
       "devDependencies": {
-        "@types/bun": "^1.3.13",
+        "@types/bun": "^1.3.14",
         "typescript": "^6.0.3",
         "yo-unit": "^0.19.3",
       },

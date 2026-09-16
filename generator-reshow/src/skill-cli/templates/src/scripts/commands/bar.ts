@@ -13,6 +13,7 @@ async function bar(args: BarArgs) {
 
 export const barCommand: CLICommand = {
   name: "bar",
+  aliases: ["b", "baz"],
   description: "Run the bar action against a target",
   inputSchema: BarArgsSchema,
   positionalKeys: ["target"],

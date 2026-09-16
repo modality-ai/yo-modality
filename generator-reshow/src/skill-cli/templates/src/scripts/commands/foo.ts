@@ -13,6 +13,7 @@ async function foo(args: FooArgs) {
 
 export const fooCommand: CLICommand = {
   name: "foo",
+  aliases: ["f"],
   description: "Run the foo action against a target",
   inputSchema: FooArgsSchema,
   positionalKeys: ["target"],

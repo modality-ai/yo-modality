@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createCliRunner } from "modality-cli-kit";
 import { aiTool } from "../scripts";
-import { registry, CLI_NAME, TAGLINE } from "../scripts/commands-index";
+import { registry, CLI_NAME, TAGLINE } from "../scripts/registry";
 
 /**
  * The <%= mainName %> CLI. All the generic machinery (help, alias resolution, arg
