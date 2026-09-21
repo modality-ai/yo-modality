@@ -43,6 +43,7 @@ describe("!! skill-cli-package-json !!", () => {
     assert.fileContent("package.json", "foo-desc");
     assert.fileContent("package.json", '"main": "./dist/index.js"');
     assert.fileContent("package.json", '"modality-cli-kit"');
+    assert.fileContent("package.json", "build:commands");
     assert.fileContent("package.json", "./dist/runner/cli.js");
   });
 });

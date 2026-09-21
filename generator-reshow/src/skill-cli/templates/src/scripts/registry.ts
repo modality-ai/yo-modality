@@ -1,4 +1,5 @@
-import { createCommandRegistryFromDir, resolveCommandsDir } from "modality-cli-kit";
+import { createCommandRegistry } from "modality-cli-kit";
+import { commands } from "./generated.commands";
 
 /** The CLI binary name, shown in help usage lines. */
 export const CLI_NAME = "<%= mainName %>";
@@ -7,18 +8,19 @@ export const CLI_NAME = "<%= mainName %>";
 export const TAGLINE = "<%= mainName %> command-line toolkit";
 
 /**
- * The command registry, scanned from the commands directory.
+ * The command registry, built from a generated static commands index.
  *
- * There is no index module to maintain: every file in that directory that
- * exports a `*Command` is registered, and each command declares its own
- * `aliases`. Adding a command is dropping in a file; removing one is deleting
- * that file. Nothing else needs editing — which also means no alias entry can
- * be left behind pointing at a command that no longer exists.
+ * There is no hand-written index to maintain: `build:commands` scans the
+ * commands directory (src/scripts/commands by default) and writes
+ * `generated.commands.ts`, which statically imports every command here.
+ * Adding a command is dropping in a file and re-running the build; removing
+ * one is deleting that file.
  *
- * The build must emit the command files individually — see `build:cli` in
- * package.json, which names the commands directory as an entrypoint glob.
- * Without that, the bundler inlines them and the directory is empty at runtime.
+ * Aliases live on each command's own `aliases` field and are harvested
+ * automatically by `createCommandRegistry` — nothing else needs editing.
+ *
+ * A static list (rather than a runtime directory scan) means the bundler emits
+ * one shared dependency graph — the built CLI starts in milliseconds instead
+ * of importing every command as a separate bundle on each launch.
  */
-export const registry = await createCommandRegistryFromDir(
-  resolveCommandsDir({ from: import.meta.url }),
-);
+export const registry = createCommandRegistry(commands);

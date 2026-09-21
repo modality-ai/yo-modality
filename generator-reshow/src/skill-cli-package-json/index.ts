@@ -20,11 +20,12 @@ const defaultPackageJSON = {
   scripts: {
     clean: "find ./dist -name '*.*' | xargs rm -rf",
     "build:types": "bun tsc -p ./",
+    "build:commands": "modality-cli generate-commands",
     "build:cli":
-      "bun build ./src/runner/cli.ts ./src/index.ts ./src/scripts/commands/*.ts --target=bun --outdir=./dist --root=./src",
+      "bun build ./src/runner/cli.ts ./src/index.ts --target=bun --outdir=./dist --root=./src",
     build:
-      "bun run clean && bun run build:types && bun run build:cli && chmod +x ./dist/runner/cli.js",
-    test: "npm run build && bun test",
+      "bun run build:commands && bun run clean && bun run build:types && bun run build:cli && chmod +x ./dist/runner/cli.js",
+    test: "bun run build:commands && npm run build && bun test",
   },
   files: ["dist", "package.json", "README.md"],
 };
@@ -34,7 +35,7 @@ const defaultPackageJSON = {
  *
  * Owns the package.json shape for a `modality-cli-kit` toolkit: a `bin`
  * pointing at the built CLI runner, the `modality-cli-kit` runtime dependency,
- * and the clean/build:types/build:cli pipeline.
+ * and the clean/build:commands/build:types/build:cli pipeline.
  */
 export default class extends YoGenerator {
   default() {
