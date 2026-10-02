@@ -37,7 +37,6 @@ export default class extends YoGenerator {
     ];
 
     handleAnswers(await mergePromptOrOption(prompts), (payload: any) => {
-      console.log({payload});
       composeWithBefore(require.resolve("../bun-package-json"), payload);
     });
   }
