@@ -1,0 +1,42 @@
+---
+name: "*<%= mainName %>"
+description: "<%= description %>"
+---
+
+```yaml
+method:
+  name: "*<%= mainName %>"
+  icon: 🛠️
+  category: cli
+  introduce: "<%= description %>"
+  usage:
+    method: "*<%= mainName %> [task]"
+    parameters:
+      task:
+        description: Natural-language task to turn into a <%= mainName %> command.
+        type: string
+        required: false
+    examples:
+      - "*<%= mainName %> run foo against my-target → build the command and run it"
+  agent_compatibility:
+    - "✅ JAMES (Full Stack Developer) - CLI orchestration"
+
+methodology:
+  purpose: >-
+    Translate the user's task into a <%= mainName %> command, run it, and report the result.
+  expected_output:
+    - The command that was run, in a bash-fenced code block
+    - The command output in full, including exit status and any stderr
+    - A plain-language interpretation of the result
+
+integration_protocols:
+  run:
+    command: "<%= mainName %> foo <target>"
+    alias: "<%= mainName %> f <target>"
+    help: "<%= mainName %> --help"
+
+tactical_notes:
+  mission_critical:
+    - "Run <%= mainName %> --help to confirm available commands before building one"
+    - "Check the command output for success before reporting the result"
+```

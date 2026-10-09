@@ -7,7 +7,10 @@ const defaultPackageJSON = {
     zod: "*",
   },
   devDependencies: {
+    "@modality-counter/core": "*",
     "modality-bun-kit": "*",
+    "react": "*",
+    "react-dom": "*",
   },
   exports: {
     types: "./types/index.d.ts",
