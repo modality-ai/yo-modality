@@ -25,7 +25,7 @@ const defaultPackageJSON = {
     "build:types": "bun tsc -p ./",
     "build:commands": "modality-cli generate-commands",
     "build:cli":
-      "bun build ./src/runner/cli.ts ./src/index.ts --target=bun --outdir=./dist --root=./src",
+      "bun build ./src/runner/cli.ts ./src/index.ts --target=bun --outdir=./dist --root=./src --external @modality-counter/core",
     build:
       "bun run build:commands && bun run clean && bun run build:types && bun run build:cli && chmod +x ./dist/runner/cli.js",
     test: "bun run build:commands && npm run build && bun test",

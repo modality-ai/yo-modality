@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createCliRunner } from "modality-cli-kit";
 import { aiTool } from "../scripts";
 import { registry, CLI_NAME, TAGLINE } from "../scripts/registry";
+import { join } from "node:path";
 
 /**
  * The <%= mainName %> CLI. All the generic machinery (help, alias resolution, arg
@@ -19,6 +20,7 @@ export const cli = createCliRunner({
     help: z.boolean().optional().describe("Show this help message"),
     json: z.boolean().optional().describe("Output in JSON format"),
   }),
+  methodsDir: join(import.meta.dir, "../../methods"),
 });
 
 export const runCli = cli.run;

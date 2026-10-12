@@ -1,8 +1,8 @@
 import type { AITool } from "modality-mcp-kit";
 
-import { createFlatCommandSchema, getHelp } from "modality-cli-kit";
+import { createFlatCommandSchema } from "modality-cli-kit";
 import { z } from "zod";
-import { registry, CLI_NAME, TAGLINE } from "./registry";
+import { registry } from "./registry";
 
 /**
  * SkillSchema addresses the whole command bundle: a `command` field selecting
@@ -27,12 +27,12 @@ export const aiTool: AITool = {
     const { command, ...args } = props;
 
     if (!command) {
-      // No command selected (e.g. empty invocation) → return help text.
-      return getHelp({
-        cliName: CLI_NAME,
-        tagline: TAGLINE,
-        commands: registry.all,
-      });
+      // No command selected (e.g. empty invocation) → return the runner's help,
+      // so it matches `--help` (global options, footer, default commands).
+      // Imported lazily: cli-core imports this file, so a static import would
+      // create a cycle.
+      const { cli } = await import("../lib/cli-core");
+      return cli.getHelp();
     }
 
     return registry.execute(String(command), args);

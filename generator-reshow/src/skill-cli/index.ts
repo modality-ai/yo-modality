@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { YoGenerator, YoHelper, commonPrompt } from "yo-reshow";
 
 /**
@@ -58,5 +60,19 @@ export default class extends YoGenerator {
     cp("README.md", null, this.payload);
     cp("tsconfig.json", null, this.payload);
     cp("_gitignore", ".gitignore", this.payload);
+  }
+
+  /**
+   * Create `methods/<name>/skills/<name>` as a symlink to `src`, so the
+   * `xxx skill` command (methodsDir in cli-core.ts) can find SKILL.mdx.
+   */
+  end() {
+    const name = this.mainName;
+    const skillsDir = this.destinationPath(path.join("methods", name, "skills"));
+    const link = path.join(skillsDir, name);
+    fs.mkdirSync(skillsDir, { recursive: true });
+    if (!fs.existsSync(link)) {
+      fs.symlinkSync(path.relative(skillsDir, this.destinationPath("src")), link);
+    }
   }
 }
