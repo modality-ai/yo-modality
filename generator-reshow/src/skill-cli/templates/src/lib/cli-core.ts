@@ -1,26 +1,15 @@
-import { z } from "zod";
 import { createCliRunner } from "modality-cli-kit";
 import { aiTool } from "../scripts";
-import { registry, CLI_NAME, TAGLINE } from "../scripts/registry";
-import { join } from "node:path";
+import { cliConfig } from "../scripts/cliConfig";
 
 /**
  * The <%= mainName %> CLI. All the generic machinery (help, alias resolution, arg
- * validation, dispatch) lives in `modality-cli-kit`; this file only supplies
- * the app-specific config. Passing `aiTool` routes command dispatch through the
- * same counter-script entry point the MCP server uses, and makes an empty
- * invocation defer to it (no-command → help text) automatically.
+ * validation, dispatch) lives in `modality-cli-kit`; this file only wires the
+ * shared config (src/scripts/cliConfig.ts) to the runner. Passing `aiTool`
+ * routes command dispatch through the same counter-script entry point the MCP
+ * server uses, and makes an empty invocation defer to it (no-command → help
+ * text, built from the same config so it matches `--help`).
  */
-export const cli = createCliRunner({
-  cliName: CLI_NAME,
-  tagline: TAGLINE,
-  registry,
-  aiTool,
-  globalOptionsSchema: z.object({
-    help: z.boolean().optional().describe("Show this help message"),
-    json: z.boolean().optional().describe("Output in JSON format"),
-  }),
-  methodsDir: join(import.meta.dir, "../../methods"),
-});
+export const cli = createCliRunner({ ...cliConfig, aiTool });
 
 export const runCli = cli.run;
