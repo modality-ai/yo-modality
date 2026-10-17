@@ -1,6 +1,6 @@
 import type { AITool } from "modality-mcp-kit";
 
-import { createFlatCommandSchema } from "modality-cli-kit";
+import { createFlatCommandSchema, setNoColor } from "modality-cli-kit";
 import { z } from "zod";
 import { registry } from "./registry";
 
@@ -19,6 +19,10 @@ export const aiTool: AITool = {
   inputSchema: SkillSchema,
 
   async execute(props: SkillProps) {
+    // aiTool output is returned as text to a model or MCP client, never to a
+    // terminal, so it must not contain ANSI escape codes.
+    setNoColor(true);
+
     // Strip the bundle selector; the rest of the flattened props are the
     // chosen command's args. The registry resolves the name (or alias) and
     // dispatches to that command's own execute. `command` is typed `unknown`
