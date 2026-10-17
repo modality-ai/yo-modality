@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { defineCliConfig } from "modality-cli-kit";
 import { join } from "node:path";
-import { registry, CLI_NAME, TAGLINE } from "./registry";
+import { registry, CLI_NAME, TAGLINE } from "../scripts/registry";
 
 /**
  * The one shared CLI config. `createCliRunner` (src/lib/cli-core.ts) and the

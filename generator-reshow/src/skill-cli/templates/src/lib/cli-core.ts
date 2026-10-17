@@ -1,11 +1,11 @@
 import { createCliRunner } from "modality-cli-kit";
 import { aiTool } from "../scripts";
-import { cliConfig } from "../scripts/cliConfig";
+import { cliConfig } from "../config/cliConfig";
 
 /**
  * The <%= mainName %> CLI. All the generic machinery (help, alias resolution, arg
  * validation, dispatch) lives in `modality-cli-kit`; this file only wires the
- * shared config (src/scripts/cliConfig.ts) to the runner. Passing `aiTool`
+ * shared config (src/config/cliConfig.ts) to the runner. Passing `aiTool`
  * routes command dispatch through the same counter-script entry point the MCP
  * server uses, and makes an empty invocation defer to it (no-command → help
  * text, built from the same config so it matches `--help`).
