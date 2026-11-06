@@ -28,7 +28,7 @@ const files: MiddlewareHandler = serveStatic({
 
 export const staticHandler: MiddlewareHandler = async (c, next) => {
   if (c.req.method !== "GET" && c.req.method !== "HEAD") {
-    c.res = await c.notFound();
+    await next();
     return;
   }
   const response = await files(c, next);
