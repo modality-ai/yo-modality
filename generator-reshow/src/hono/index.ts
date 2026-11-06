@@ -38,11 +38,14 @@ const defaultPackageJSON = {
   },
   devDependencies: {
     "modality-bun-kit": "*",
+    "@tailwindcss/cli": "^4.3.4",
+    "tailwindcss": "^4.3.4",
   },
   scripts: {
     "build:types": "bun tsc -p ./",
     "build:client": "bun run src/build.ts",
-    build: "bun build:types && bun build:client",
+    "build:styles": "bun src/build-css.ts",
+    build: "bun build:types && bun build:client && bun build:styles",
     test: "npm run build && bun test",
     start: "bun run src/runner/server.ts",
     dev: "bun --hot src/runner/server.ts",
@@ -82,6 +85,8 @@ export default class extends YoGenerator {
 
     cp("src/runner/server.ts", null, this.payload);
     cp("src/runner/static.ts", null, this.payload);
+    cp("src/styles/index.css", null, this.payload);
+    cp("src/build-css.ts", null, this.payload);
     cp("src/cli.ts", null, this.payload);
     cp("src/build.ts", null, this.payload);
     cp("src/runner/client.tsx", null, this.payload);
